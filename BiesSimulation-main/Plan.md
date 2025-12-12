@@ -38,15 +38,6 @@ Canvas ist Bühne (ruhig, atmosphärisch), UI ist Labor-HUD (klar, modular), Age
 - **Ein Farbsystem:** Strategie-Farben identisch in UI + Sprites + Chart.
 - **Performance-Budget:** "FX/Background" sind Quality-Stufen, kein Default-Overkill.
 
-## Umsetzungsstand (Kap. 1 & 2)
-- Dynamic Color System (Mood Themes peace/conflict/cooperative + Canvas-Farbe) aktiv.
-- Advanced Typography & Micro-Motion: Space Grotesk + Parallax/Layered Background + Hover/Focus-Motion.
-- Progressive Disclosure: Expert Mode Toggle (advanced groups hidden by default), Guide/Onboarding Overlay.
-- Guided Workflows: Onboarding Steps (Presets, Start/Pause, Expert Mode Hinweis).
-- Contextual Help: Hint-Bar mit heuristischen Tipps (Aggro/Koop/Energie/Food).
-- Simplified Control Interfaces: Gesten (Double-Tap Pause, Pinch-Speed), Voice Commands (start/pause/reset/faster/slower, Preset Keywords).
-
----
 
 # 2) UI Umbau (Layout + Information Architecture)
 
@@ -227,3 +218,12 @@ Wenn nach dem Umbau noch Zeit/Mut da ist:
 ## 8.2 Risiken + Absicherung (kurz)
 - Performance Regression durch FX/Background -> Quality Stufen + Auto-Downgrade + Toggles.
 - UI Umbau verwirrt "alte Nutzer" -> optionaler "Classic Layout" Toggle fuer Uebergang.
+
+---
+
+# 9) Naechste Schritte UI + Performance (kurzfristig)
+- Layout-Split in `index.html`: kompakte Top-Bar fuer Start/Preset/Speed + zwei Docks (Setup/Insights) mit Tabs/Accordion; mobiles Fallback bleibt Single-Column, keine neuen Dependencies.
+- Controls-Refactor: `Controls.ts` in Gruppen kapseln (Preset/Population/Parameters/Rules/Debug), Events nur bei commit feuern, Slider-Werte debouncen bevor sie `CONFIG` schreiben.
+- Einheitliches Farbsystem: Palette zentral halten (z.B. shared constants) und von Sprites, Chart, CSS nutzen; Theme-Umschaltung nur per data-attribute/CSS vars.
+- Performance-Guides: Effects/Trails standardmaessig auf Mid-Quality begrenzen, einfache FPS/FrameTime-Anzeige einbauen und bei <55 FPS automatisch Effekte/Trails/Heatmap drosseln.
+- Canvas-Background: Offscreen-Backplate einmal rendern (Gradient+Vignette), Hotspot-Hints optional, Overlay-Toggles nur on-demand zeichnen, damit der Render-Loop schlank bleibt.
